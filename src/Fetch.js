@@ -20,10 +20,10 @@ class Fetch extends Component {
 
   render() {
     const { error, loading, data } = this.state;
-    const { children } = this.props;
+    const { render } = this.props;
     if (error) return <div style={{ color: 'red' }}>Error loading</div>;
     if (loading) return <div>Loading ...</div>;
-    return children(data);
+    return render(data);
   }
 }
 
