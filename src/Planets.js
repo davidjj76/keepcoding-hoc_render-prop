@@ -1,30 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
+
+import withFetch from './withFetch';
 
 const renderPlanet = ({ url, name }) => <li key={url}>{name}</li>;
 
-class Planets extends Component {
-  state = {
-    error: null,
-    loading: true,
-    planets: null,
-  };
+const Planets = ({ planets }) => <ul>{planets.map(renderPlanet)}</ul>;
 
-  async componentDidMount() {
-    try {
-      const response = await fetch('https://swapi.co/api/planets');
-      const { results } = await response.json();
-      this.setState({ error: null, loading: false, planets: results });
-    } catch (error) {
-      this.setState({ error, loading: false, planets: null });
-    }
-  }
-
-  render() {
-    const { error, loading, planets } = this.state;
-    if (error) return <div style={{ color: 'red' }}>Error loading</div>;
-    if (loading) return <div>Loading ...</div>;
-    return <ul>{planets.map(renderPlanet)}</ul>;
-  }
-}
-
-export default Planets;
+export default withFetch({
+  dataProp: 'planets',
+  url: 'https://swapi.co/api/planets',
+})(Planets);
