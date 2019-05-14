@@ -1,14 +1,13 @@
 import React from 'react';
 
-import withFetch from './withFetch';
+import Fetch from './Fetch';
 
 const renderPlanet = ({ url, name }) => <li key={url}>{name}</li>;
 
-const Planets = ({ planets, sort }) => (
-  <ul>{planets.sort(sort).map(renderPlanet)}</ul>
+const Planets = ({ sort }) => (
+  <Fetch url="https://swapi.co/api/planets">
+    {planets => <ul>{planets.sort(sort).map(renderPlanet)}</ul>}
+  </Fetch>
 );
 
-export default withFetch({
-  dataProp: 'planets',
-  url: 'https://swapi.co/api/planets',
-})(Planets);
+export default Planets;
